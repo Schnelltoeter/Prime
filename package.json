@@ -1,0 +1,14 @@
+{
+  "name": "prime_numbers",
+  "version": "0.0.1",
+  "description": "Find prime numbers.",
+  "main": "main.js",
+  "scripts": {
+    "test": "node main.js"
+  },
+  "author": "Julian Freund",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^18.15.10"
+  }
+}
