@@ -6,6 +6,7 @@ let start = Date.now();
 const max: number = 10000000;
 const primes: number[] = [];
 const sieve: boolean[] = [];
+const primeNumbers: PrimeNumbers[] = [];
 var increment: number = 0;
 
 for (let number = 2; number < max + 1; number++) {
@@ -31,5 +32,36 @@ for (let prime = 0; prime < sieve.length; prime++) {
     }
 }
 
-fs.writeFileSync("./sieve/sieve_primes.json", JSON.stringify(primes));
+primes.forEach((num: number) => {
+    var isPrime = false;
+    if (num + 2 in primes) {
+        isPrime = true;
+    }
+    primeNumbers.push({
+        number: num,
+        isPrime: true,
+        neighbor: { number: num + 2, isPrime: isPrime },
+    });
+});
+function printPrimeNeighbors() {
+    const primeNeighbors: PrimeNumbers[] = [];
+
+    primeNumbers.forEach((prime) => {
+        if (prime.neighbor.isPrime === true) {
+            primeNeighbors.push(prime);
+        }
+    });
+
+    return primeNeighbors;
+}
+fs.writeFileSync(
+    "./sieve/sieve_primenumbers.json",
+    JSON.stringify(primeNumbers)
+);
+fs.writeFileSync(
+    "./sieve/sieve_primeneighbors.json",
+    JSON.stringify(printPrimeNeighbors())
+);
+
+// fs.writeFileSync("./sieve/sieve_primes.json", JSON.stringify(primes));
 console.log(`Time: ${Date.now() - start}ms`);
