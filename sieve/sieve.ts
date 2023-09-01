@@ -3,7 +3,7 @@ import { PrimeNumbers } from "../factor/factor.js";
 
 let start = Date.now();
 
-const max: number = 10000000;
+const max: number = 1000000;
 const primes: number[] = [];
 const sieve: boolean[] = [];
 const primeNumbers: PrimeNumbers[] = [];
@@ -34,7 +34,7 @@ for (let prime = 0; prime < sieve.length; prime++) {
 
 primes.forEach((num: number) => {
     var isPrime = false;
-    if (num + 2 in primes) {
+    if (primes.includes(num + 2)) {
         isPrime = true;
     }
     primeNumbers.push({
