@@ -3,7 +3,7 @@ import { PrimeNumbers } from "../factor/factor.js";
 
 let start = Date.now();
 
-const max: number = 10000000;
+const max: number = 1000000;
 const primes: number[] = [];
 const sieve: boolean[] = [];
 const primeNumbers: PrimeNumbers[] = [];
@@ -32,9 +32,10 @@ for (let prime = 0; prime < sieve.length; prime++) {
     }
 }
 
-primes.forEach((num: number) => {
+for (let index = 0; index < primes.length; index++) {
+    const num = primes[index];
     var isPrime = false;
-    if (num + 2 in primes) {
+    if (num + 2 == primes[index + 1]) {
         isPrime = true;
     }
     primeNumbers.push({
@@ -42,7 +43,8 @@ primes.forEach((num: number) => {
         isPrime: true,
         neighbor: { number: num + 2, isPrime: isPrime },
     });
-});
+}
+
 function printPrimeNeighbors() {
     const primeNeighbors: PrimeNumbers[] = [];
 
