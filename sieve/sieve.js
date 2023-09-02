@@ -23,9 +23,10 @@ for (var prime = 0; prime < sieve.length; prime++) {
         primes.push(prime + 2);
     }
 }
-primes.forEach(function (num) {
+for (var index = 0; index < primes.length; index++) {
+    var num = primes[index];
     var isPrime = false;
-    if (primes.includes(num + 2)) {
+    if (num + 2 == primes[index + 1]) {
         isPrime = true;
     }
     primeNumbers.push({
@@ -33,7 +34,7 @@ primes.forEach(function (num) {
         isPrime: true,
         neighbor: { number: num + 2, isPrime: isPrime },
     });
-});
+}
 function printPrimeNeighbors() {
     var primeNeighbors = [];
     primeNumbers.forEach(function (prime) {

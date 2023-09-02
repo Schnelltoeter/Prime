@@ -32,9 +32,10 @@ for (let prime = 0; prime < sieve.length; prime++) {
     }
 }
 
-primes.forEach((num: number) => {
+for (let index = 0; index < primes.length; index++) {
+    const num = primes[index];
     var isPrime = false;
-    if (primes.includes(num + 2)) {
+    if (num + 2 == primes[index + 1]) {
         isPrime = true;
     }
     primeNumbers.push({
@@ -42,7 +43,8 @@ primes.forEach((num: number) => {
         isPrime: true,
         neighbor: { number: num + 2, isPrime: isPrime },
     });
-});
+}
+
 function printPrimeNeighbors() {
     const primeNeighbors: PrimeNumbers[] = [];
 
