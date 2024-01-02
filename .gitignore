@@ -2,3 +2,4 @@
 /test
 /__pycache__
 /sieve/sieve_primenumbers.json
+/sieve/sieve_primeneighbors.json
