@@ -1,7 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var fs = require("fs");
-var start = Date.now();
+// "use strict";
+// Object.defineProperty(exports, "__esModule", { value: true });
+import { writeFileSync } from "fs";
+console.time("factor");
 var primeNumbers = [
     { number: 2, isPrime: true, neighbor: { isPrime: false, number: 4 } },
 ];
@@ -45,6 +45,12 @@ function printPrimeNeighbors() {
     });
     return primeNeighbors;
 }
-console.log("Time: ".concat(Date.now() - start));
-fs.writeFileSync("primeNumbers.json", JSON.stringify(printPrimes()));
-fs.writeFileSync("primeNeighbors.json", JSON.stringify(printPrimeNeighbors()));
+console.timeEnd("factor");
+writeFileSync(
+    "./factor/factor_primeNumbers.json",
+    JSON.stringify(printPrimes())
+);
+writeFileSync(
+    "./factor/factor_primeNeighbors.json",
+    JSON.stringify(printPrimeNeighbors())
+);

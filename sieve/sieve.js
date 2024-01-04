@@ -1,7 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var fs = require("fs");
-var start = Date.now();
+// "use strict";
+// Object.defineProperty(exports, "__esModule", { value: true });
+import { writeFileSync } from "fs";
+console.time("sieve");
 var max = 1000000;
 var primes = [];
 var sieve = [];
@@ -13,7 +13,11 @@ for (var number = 2; number < max + 1; number++) {
 for (var index = 0; index < Math.sqrt(sieve.length); index++) {
     if (sieve[index]) {
         increment = index + 2;
-        for (var noPrimePos = index + increment; noPrimePos < sieve.length; noPrimePos = noPrimePos + increment) {
+        for (
+            var noPrimePos = index + increment;
+            noPrimePos < sieve.length;
+            noPrimePos = noPrimePos + increment
+        ) {
             sieve[noPrimePos] = false;
         }
     }
@@ -44,7 +48,10 @@ function printPrimeNeighbors() {
     });
     return primeNeighbors;
 }
-fs.writeFileSync("./sieve/sieve_primenumbers.json", JSON.stringify(primeNumbers));
-fs.writeFileSync("./sieve/sieve_primeneighbors.json", JSON.stringify(printPrimeNeighbors()));
+writeFileSync("./sieve/sieve_primenumbers.json", JSON.stringify(primeNumbers));
+writeFileSync(
+    "./sieve/sieve_primeneighbors.json",
+    JSON.stringify(printPrimeNeighbors())
+);
 // fs.writeFileSync("./sieve/sieve_primes.json", JSON.stringify(primes));
-console.log("Time: ".concat(Date.now() - start, "ms"));
+console.timeEnd("sieve");

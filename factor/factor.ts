@@ -1,6 +1,6 @@
 import * as fs from "fs";
 
-let start = Date.now();
+console.time("factor");
 
 export declare interface PrimeNumbers {
     number: number;
@@ -65,7 +65,13 @@ function printPrimeNeighbors() {
     return primeNeighbors;
 }
 
-console.log(`Time: ${Date.now() - start}`);
+console.timeEnd("factor");
 
-fs.writeFileSync("primeNumbers.json", JSON.stringify(printPrimes()));
-fs.writeFileSync("primeNeighbors.json", JSON.stringify(printPrimeNeighbors()));
+fs.writeFileSync(
+    "./factor/factor_primeNumbers.json",
+    JSON.stringify(printPrimes())
+);
+fs.writeFileSync(
+    "./factor/factor_primeNeighbors.json",
+    JSON.stringify(printPrimeNeighbors())
+);

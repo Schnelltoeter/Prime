@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import { PrimeNumbers } from "../factor/factor.js";
 
-let start = Date.now();
+console.time("sieve");
 
 const max: number = 1000000;
 const primes: number[] = [];
@@ -66,4 +66,4 @@ fs.writeFileSync(
 );
 
 // fs.writeFileSync("./sieve/sieve_primes.json", JSON.stringify(primes));
-console.log(`Time: ${Date.now() - start}ms`);
+console.timeEnd("sieve");
