@@ -3,3 +3,5 @@
 /__pycache__
 /sieve/sieve_primenumbers.json
 /sieve/sieve_primeneighbors.json
+/factor/factor_primeNumbers
+/factor/factor_primeNeighbors
