@@ -1,20 +1,20 @@
-import jsonData from "http://127.0.0.1:5500/web/extractedNeighbors.js";
+import { data } from "./extractedNeighbors.js";
 console.info("Loading script...");
 
-function difference(jsonData) {
+function difference(data) {
     let difference = [];
 
-    jsonData.forEach((data) => {
+    data.forEach((data) => {
         difference.push(data.difference.number);
     });
     return difference;
 }
 
-function mapped(jsonData) {
+function mapped(data) {
     const map = new Map();
     let difference = [];
 
-    jsonData.forEach((data) => {
+    data.forEach((data) => {
         difference.push(data.difference.number);
     });
     difference.forEach((num) => {
@@ -34,17 +34,17 @@ function avg(array) {
     var test = sum / array.length;
     return test;
 }
-const map = mapped(jsonData);
+const map = mapped(data);
 
-var data = [
+var Plotly_data = [
     {
         x: Array.from(map.keys()),
         y: Array.from(map.values()),
         type: "line",
     },
 ];
-document.getElementById("avg").innerHTML = avg(difference(jsonData));
-Plotly.newPlot("tester", data);
+document.getElementById("avg").innerHTML = avg(difference(data));
+Plotly.newPlot("tester", Plotly_data);
 console.info("Script loaded!");
 // console.log(map.keys());
 // console.log(map.values());

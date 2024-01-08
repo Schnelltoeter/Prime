@@ -2,7 +2,7 @@
 // Object.defineProperty(exports, "__esModule", { value: true });
 import { writeFileSync } from "fs";
 var max = 1000000;
-var runs = 100;
+var runs = 1;
 var durations = [];
 for (var i = 0; i < runs; i++) {
     const start = performance.now();
