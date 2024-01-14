@@ -28,6 +28,7 @@ function isPrimeNumber(number: number) {
         }
         if (number % prime.number === 0) {
             isPrime = false;
+            break;
         }
     }
     return isPrime;
