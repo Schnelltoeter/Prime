@@ -1,76 +1,54 @@
 import { writeFileSync } from "fs";
-var max = 100000000;
-var runs = 1;
-var durations = [];
-for (var i = 0; i < runs; i++) {
-    const start = performance.now();
-    runSieve(max);
-    const end = performance.now();
-    durations[i] = end - start;
+console.time("factor");
+var primeNumbers = [
+    { number: 2, isPrime: true, neighbor: { isPrime: false, number: 4 } },
+];
+var maxPrime = 1000000;
+function isPrimeNumber(number) {
+    var isPrime = true;
+    var sqrt = Math.sqrt(number);
+    for (var index = 0; index < primeNumbers.length; index++) {
+        var prime = primeNumbers[index];
+        if (prime.number > sqrt) {
+            break;
+        }
+        if (number % prime.number === 0) {
+            isPrime = false;
+        }
+    }
+    return isPrime;
 }
-var primeNumbers = runSieve(max);
-
-writeFileSync("./sieve/sieve_primenumbers.json", JSON.stringify(primeNumbers));
-writeFileSync(
-    "./sieve/sieve_primeneighbors.json",
-    JSON.stringify(printPrimeNeighbors(primeNumbers))
-);
-var averageTime = 0;
-durations.forEach((duration) => (averageTime += duration));
-averageTime /= runs;
-durations = durations.sort((a, b) => (a < b ? -1 : 1));
-console.log(`Min: ${durations[0].toFixed(10)} ms`);
-console.log(`Max: ${durations[durations.length - 1].toFixed(10)} ms`);
-console.log(
-    `Median: ${durations[Math.floor(durations.length / 2)].toFixed(10)} ms`
-);
-console.log(`Average runtime: ${averageTime.toFixed(10)} ms`);
-// fs.writeFileSync("./sieve/sieve_primes.json", JSON.stringify(primes));
-
-function runSieve(max) {
+for (var number = 3; number <= maxPrime; number += 2) {
+    primeNumbers.push({
+        number: number,
+        isPrime: isPrimeNumber(number),
+        neighbor: { number: number + 2, isPrime: isPrimeNumber(number + 2) },
+    });
+}
+function printPrimes() {
     var primes = [];
-    var sieve = Array(max - 2).fill(true);
-    var increment = 0;
-    // for (var number = 2; number < max + 1; number++) {
-    //     sieve.push(true);
-    // }
-    var noPrimePos = 0;
-    for (var index = 0; index < Math.sqrt(sieve.length); index++) {
-        if (sieve[index]) {
-            increment = index + 2;
-            for (
-                noPrimePos = index + increment;
-                noPrimePos < sieve.length;
-                noPrimePos = noPrimePos + increment
-            ) {
-                sieve[noPrimePos] = false;
-            }
+    primeNumbers.forEach(function (prime) {
+        if (prime.isPrime === true) {
+            primes.push(prime);
         }
-    }
-    for (var prime = 0; prime < sieve.length; prime++) {
-        if (sieve[prime]) {
-            primes.push(prime + 2);
-        }
-    }
-    var primeNumbers = Array(primes.length);
-    for (var index = 0; index < primes.length; index++) {
-        var num = primes[index];
-        var isPrime = num + 2 == primes[index + 1];
-        primeNumbers[index] = {
-            number: num,
-            isPrime: true,
-            neighbor: { number: num + 2, isPrime: isPrime },
-        };
-    }
-    return primeNumbers;
+    });
+    return primes;
 }
-
-function printPrimeNeighbors(primeNumbers) {
+function printPrimeNeighbors() {
     var primeNeighbors = [];
     primeNumbers.forEach(function (prime) {
-        if (prime.neighbor.isPrime === true) {
+        if (prime.isPrime === true && prime.neighbor.isPrime === true) {
             primeNeighbors.push(prime);
         }
     });
     return primeNeighbors;
 }
+console.timeEnd("factor");
+writeFileSync(
+    "./factor/factor_primeNumbers.json",
+    JSON.stringify(printPrimes())
+);
+writeFileSync(
+    "./factor/factor_primeNeighbors.json",
+    JSON.stringify(printPrimeNeighbors())
+);

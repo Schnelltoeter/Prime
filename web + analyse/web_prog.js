@@ -43,9 +43,10 @@ var Plotly_data = [
         type: "line",
     },
 ];
+var layout = { title: "Distribution of Distances" };
 document.getElementById("avg").innerHTML = avg(difference(data));
-Plotly.newPlot("tester", Plotly_data);
+Plotly.newPlot("tester", Plotly_data, layout);
 console.info("Script loaded!");
 // console.log(map.keys());
 // console.log(map.values());
-console.log(map);
+// console.log(map);

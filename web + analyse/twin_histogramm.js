@@ -1,28 +1,50 @@
-import { data } from "./extractedNeighbors.js";
-let primeNeighbors = [];
+import { data as neighbor_data } from "./extractedNeighbors.js";
+import { prime_data } from "./sieve_primenumbers.js";
+let primes = [];
 let distances = [];
+var index_primes = 0;
+var color = [];
+var isPrimeNeighbor = false;
+let lastPrimeNeighbor = 0;
+let lastPrime;
+let Number_Neighbor = 0;
 
 console.log("Distances loading...");
 
-for (let index = 0; index < data.length; index++) {
-    const dataset = data[index];
-    if (dataset.current.next > 2000) {
-        break;
+for (
+    let prime = prime_data[index_primes];
+    prime.number < 1000000;
+    index_primes++
+) {
+    prime = prime_data[index_primes];
+    primes.push(prime.number);
+    if (isPrimeNeighbor) {
+        color.push("rgba(0,0,255,1)");
+        distances.push(prime.number - lastPrimeNeighbor.number);
+        lastPrimeNeighbor = prime;
+        Number_Neighbor++;
+    } else {
+        color.push("rgba(222,45,38,1)");
+        distances.push(10);
     }
-    primeNeighbors.push(dataset.current.number);
-    distances.push(dataset.difference.number);
-    primeNeighbors.push(dataset.current.next);
-    distances.push(dataset.difference.number);
+    isPrimeNeighbor = prime.neighbor.isPrime;
+    lastPrime = prime;
 }
-console.log(primeNeighbors);
+
+console.log(primes);
 console.log(distances);
 var Plotly_data = [
     {
-        x: primeNeighbors,
+        x: primes,
         y: distances,
+        marker: {
+            color: color,
+        },
         type: "bar",
     },
 ];
-Plotly.newPlot("distances", Plotly_data);
+console.log(Number_Neighbor);
+var layout = { title: "Distances" };
+Plotly.newPlot("distances", Plotly_data, layout);
 console.log(Plotly_data);
 console.log("Distances loaded");
