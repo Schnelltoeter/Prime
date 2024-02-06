@@ -1,54 +1,69 @@
-import { writeFileSync } from "fs";
+import * as fs from "fs";
+import { PrimeNumbers } from "../factor/factor.js";
+
 console.time("factor");
-var primeNumbers = [
-    { number: 2, isPrime: true, neighbor: { isPrime: false, number: 4 } },
-];
-var maxPrime = 1000000;
-function isPrimeNumber(number) {
-    var isPrime = true;
-    var sqrt = Math.sqrt(number);
-    for (var index = 0; index < primeNumbers.length; index++) {
-        var prime = primeNumbers[index];
-        if (prime.number > sqrt) {
-            break;
-        }
-        if (number % prime.number === 0) {
-            isPrime = false;
+
+const max: number = 1000000;
+const primes: number[] = [];
+const sieve: boolean[] = [];
+const primeNumbers: PrimeNumbers[] = [];
+var increment: number = 0;
+
+for (let number = 2; number < max + 1; number++) {
+    sieve.push(true);
+}
+
+for (let index = 0; index < Math.sqrt(sieve.length); index++) {
+    if (sieve[index]) {
+        increment = index + 2;
+        for (
+            let noPrimePos = index + increment;
+            noPrimePos < sieve.length;
+            noPrimePos = noPrimePos + increment
+        ) {
+            sieve[noPrimePos] = false;
         }
     }
-    return isPrime;
 }
-for (var number = 3; number <= maxPrime; number += 2) {
+
+for (let prime = 0; prime < sieve.length; prime++) {
+    if (sieve[prime]) {
+        primes.push(prime + 2);
+    }
+}
+
+for (let index = 0; index < primes.length; index++) {
+    const num = primes[index];
+    var isPrime = false;
+    if (num + 2 == primes[index + 1]) {
+        isPrime = true;
+    }
     primeNumbers.push({
-        number: number,
-        isPrime: isPrimeNumber(number),
-        neighbor: { number: number + 2, isPrime: isPrimeNumber(number + 2) },
+        number: num,
+        isPrime: true,
+        neighbor: { number: num + 2, isPrime: isPrime },
     });
 }
-function printPrimes() {
-    var primes = [];
-    primeNumbers.forEach(function (prime) {
-        if (prime.isPrime === true) {
-            primes.push(prime);
-        }
-    });
-    return primes;
-}
+
 function printPrimeNeighbors() {
-    var primeNeighbors = [];
-    primeNumbers.forEach(function (prime) {
-        if (prime.isPrime === true && prime.neighbor.isPrime === true) {
+    const primeNeighbors: PrimeNumbers[] = [];
+
+    primeNumbers.forEach((prime) => {
+        if (prime.neighbor.isPrime === true) {
             primeNeighbors.push(prime);
         }
     });
+
     return primeNeighbors;
 }
-console.timeEnd("factor");
-writeFileSync(
-    "./factor/factor_primeNumbers.json",
-    JSON.stringify(printPrimes())
+fs.writeFileSync(
+    "./sieve/sieve_primenumbers.json",
+    JSON.stringify(primeNumbers)
 );
-writeFileSync(
-    "./factor/factor_primeNeighbors.json",
+fs.writeFileSync(
+    "./sieve/sieve_primeneighbors.json",
     JSON.stringify(printPrimeNeighbors())
 );
+
+// fs.writeFileSync("./sieve/sieve_primes.json", JSON.stringify(primes));
+console.timeEnd("factor");
