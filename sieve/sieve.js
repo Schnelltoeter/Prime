@@ -2,7 +2,7 @@
 // Object.defineProperty(exports, "__esModule", { value: true });
 import { writeFileSync } from "fs";
 console.time("factor");
-var max = 1000000;
+var max = 10000;
 var primes = [];
 var sieve = [];
 var primeNumbers = [];
@@ -48,10 +48,18 @@ function printPrimeNeighbors() {
     });
     return primeNeighbors;
 }
-writeFileSync("./sieve/sieve_primenumbers.json", JSON.stringify(primeNumbers));
-writeFileSync(
-    "./sieve/sieve_primeneighbors.json",
-    JSON.stringify(printPrimeNeighbors())
-);
+//// writeFileSync("./sieve/sieve_primenumbers.json", JSON.stringify(primeNumbers));
+//// writeFileSync(
+////     "./sieve/sieve_primeneighbors.json",
+////     JSON.stringify(printPrimeNeighbors())
+//// );
 // fs.writeFileSync("./sieve/sieve_primes.json", JSON.stringify(primes));
 console.timeEnd("factor");
+
+var primeNeighborsNumbers = printPrimeNeighbors();
+var main = [];
+for (let index = 0; index < primeNeighborsNumbers.length; index++) {
+    main.push(primeNeighborsNumbers[index].number);
+    main.push(primeNeighborsNumbers[index].number + 2);
+}
+console.log(main);

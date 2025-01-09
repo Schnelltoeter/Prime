@@ -1,7 +1,7 @@
 // "use strict";
 // Object.defineProperty(exports, "__esModule", { value: true });
 import { writeFileSync } from "fs";
-var max = 10000000;
+var max = 100000;
 var runs = 1;
 var durations = [];
 for (var i = 0; i < runs; i++) {

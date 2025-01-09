@@ -1,14 +1,14 @@
 // "use strict";
 // Object.defineProperty(exports, "__esModule", { value: true });
-import { forEach } from "./primeNeighbors.json";
-import { writeFileSync } from "fs";
+import { data } from "./primeneighbors.js";
+import fs from "fs";
 // 99999587  ||  99999589   Previous: 99999539  ||  99999541    Difference: 48 true
 // current   ||  +2         Previous: prevNum   ||  prevNum+2   Difference: df div6
 var theGreatNeighborString = "";
 var prev_data;
 var divided_six = false;
 var primeData = [];
-forEach(function (data) {
+data.forEach(function (data) {
     if (data.number > 3) {
         if ((data.number - prev_data.number) % 6 == 0) {
             divided_six = true;
@@ -43,5 +43,8 @@ forEach(function (data) {
     }
     prev_data = data;
 });
-writeFileSync("extractedNeighbors.txt", theGreatNeighborString);
-writeFileSync("extractedNeighbors.json", JSON.stringify(primeData));
+fs.writeFileSync("./convert/extractedNeighbors.txt", theGreatNeighborString);
+fs.writeFileSync(
+    "./convert/extractedNeighbors.json",
+    JSON.stringify(primeData)
+);

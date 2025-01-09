@@ -52,6 +52,6 @@ var Plotly_data = [
     },
 ];
 var layout = { title: "Distribution of Distances" };
-// document.getElementById("avg").innerHTML = avg(difference(data));
-// Plotly.newPlot("tester", Plotly_data, layout);
-// console.info("Script loaded!");
+document.getElementById("avg").innerHTML = avg(difference(data));
+Plotly.newPlot("tester", Plotly_data, layout);
+console.info("Script loaded!");
